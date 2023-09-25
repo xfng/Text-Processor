@@ -77,9 +77,24 @@ public class TextProcessor implements TextProcessorInterface{
     @Override
     public void textprocessor() throws TextProcessorException {
 
-        if (this.inputFile == null || !Files.exists(Path.of(this.inputFile)) || Files.isDirectory(Path.of(this.inputFile))){
-            throw new TextProcessorException("test");
+//        if (this.inputFile == null || !Files.exists(Path.of(this.inputFile)) || Files.isDirectory(Path.of(this.inputFile))){
+//            throw new TextProcessorException("test");
+//        }
+
+        if(this.inputFile == null){
+            throw new TextProcessorException("test2");
         }
+
+        if(!Files.exists(Path.of(this.inputFile))){
+            throw new TextProcessorException("test3");
+        }
+
+        if (Files.isDirectory(Path.of(this.inputFile))){
+            throw new TextProcessorException("test3");
+        }
+
+
+
 
         // check empty input
         File file = new File(this.inputFile);
@@ -95,9 +110,10 @@ public class TextProcessor implements TextProcessorInterface{
 
         try {
             if (checkCommand() && checkTerminated(Path.of(this.inputFile))) {
+                System.out.println("check0");
                 processText();
             } else{
-                throw new TextProcessorException("test");
+                throw new TextProcessorException("test4");
             }
         } catch (IOException e) {
             throw new TextProcessorException("this is a test");
@@ -114,23 +130,26 @@ public class TextProcessor implements TextProcessorInterface{
             int lineNumber = 1;
             while((line=br.readLine())!=null){
                 String newLine = processLine(line, lineNumber);
-                if (newLine != ""){
-                    newLines.add(newLine);
-                }
+                newLines.add(newLine);
+//                if (newLine != ""){
+//                    newLines.add(newLine);
+//                }
                 lineNumber ++;
             }
             br.close();
+            System.out.println("check2");
             if (hasOption("o")){
                 String outputFile = getParameters("o").get(0);
                 saveOutput(newLines, outputFile);
             } else {
                 for (String l : newLines) {
-                    System.out.print(l + System.lineSeparator());
+                    saveOutput(newLines, this.inputFile);
+//                    System.out.print(l + System.lineSeparator());
                 }
             }
 
         } catch (IOException e) {
-            throw new TextProcessorException("test");
+            throw new TextProcessorException("test5");
         }
     }
 
@@ -145,13 +164,16 @@ public class TextProcessor implements TextProcessorInterface{
                     if (line.toLowerCase().contains(subStr.toLowerCase())){
                         line = line;
                     } else {
-                        return "";
+//                        return "";
+                        line = "";
+                        System.out.println(line);
                     }
                 } else {
                     if (line.contains(subStr)){
                         line = line;
                     } else {
-                        return "";
+//                        return "";
+                        line = "";
                     }
                 }
             }
