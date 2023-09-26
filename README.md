@@ -4,13 +4,10 @@ TextProcessor is a Java command-line tool for performing various text processing
 
 Download textprocessor.jar
 
+## Usage
 ```
 java -jar textprocessor.jar [ -o filename | -i | -k substring | -r old new | -n padding | -w | -s suffix ] FILE
 ```
-
-
-## Usage
-
 ## Options
 - `-i` : Specify the input file (required).
 - `-o` : Specify the output file.
